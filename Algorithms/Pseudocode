@@ -1,0 +1,6 @@
+Shopping List
+function main()
+    display welcome message
+    display menu options
+    while menu input is not "q"
+        check if menu input is
