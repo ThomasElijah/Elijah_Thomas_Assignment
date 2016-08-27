@@ -18,9 +18,7 @@ def main():
                     line_num += 1
                 else:
                     line_num += 1
-
-            #print required items
-            #print total expected price
+            print("Total expected price for {} items: ${:.2f}".format(#number of required items, total price of required items))
 
         elif menu_input == "C":
             something
@@ -28,7 +26,11 @@ def main():
         #print total expected price
 
         elif menu_input == "A":
-            something
+            new_item = input("Item name:")
+            while new_item == "":
+                new_item = input("Input can not be blank\nItem name:")
+            new_item_price = input("Price:")
+            #use some exceptions
         new_item = input("Item name: ")
         price = input("Price: $")
         priority = input("Priority: ")
