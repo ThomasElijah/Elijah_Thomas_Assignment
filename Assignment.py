@@ -54,7 +54,7 @@ def main():
                 except:
                     print("Invalid input; enter a valid number")
             while new_item_price < 0:
-                new_item_price("Price must be >= $0\nPrice: $")
+                new_item_price = int(input(("Price must be >= $0\nPrice: $")))
 
             run = True
             while run == True:
