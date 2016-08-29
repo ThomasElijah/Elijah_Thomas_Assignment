@@ -7,39 +7,36 @@ import math
 def main():
     shopping_list_file = open("items.csv", 'r')
     shopping_list = []
-    items = []
+
     number_items = 0
     item_number = 0
     for line in shopping_list_file:
-        item, price, priority, status = line.split(',')
-        items = [item_number, item, price, priority, status]
+        item, price, priority, status = line.strip().split(',')
+        items = [item, float(price), priority, status]
         shopping_list.append(items)
         number_items += 1
         item_number += 1
-        items.clear()
 
 
     print("Shopping List 1.0 - by Elijah Thomas")
 
     menu = "Menu:\nR - List required items\nC - List completed items\nA - Add new item\nM - Mark an item as completed\nQ - Quit"
     menu_input = str(input(menu))
-    while menu_input.upper != "Q":
+    while menu_input.upper() != "Q":
+        if menu_input.upper() == "R":
+            print_matching_items(shopping_list, 'r')
+            # for element in shopping_list:
+            #     if "r" in element[4]:
+            #         print_item(element)
+            # print("Total expected price for {} items: ${:.2f}".format(total_calculator(shopping_list, "required"), total_calculator(shopping_list, "price")))
 
-        if menu_input.upper == "R":
-            for element in shopping_list:
-                if "r" in element[4]:
-                    print(print_items(shopping_list))
-            print("Total expected price for {} items: ${:.2f}".format(total_calculator(shopping_list, "required"), total_calculator(shopping_list, "price")))
-
-
-        elif menu_input.upper == "C":
+        elif menu_input.upper() == "C":
             for element in shopping_list:
                 if "c" in element[4]:
-                    print(print_items(shopping_list))
+                    print(print_item(shopping_list))
             print("Total expected price for {} items: ${:.2f}".format(total_calculator(shopping_list, "completed"), total_calculator(shopping_list, "price")))
 
-
-        elif menu_input.upper == "A":
+        elif menu_input.upper() == "A":
             new_item = input("Item name:")
             while new_item.isspace():
                 new_item = input("Input can not be blank\nItem name:")
@@ -72,7 +69,7 @@ def main():
             items.clear()
             print("{}, ${:.2f} (priority {}) added to shopping list".format(new_item, new_item_price, new_item_priority))
 
-        elif menu_input.upper == "M":
+        elif menu_input.upper() == "M":
             for element in shopping_list:
                 print(print_items(shopping_list))
             print("Total expected price for {} items: ${:.2f}".format(number_items, total_calculator(shopping_list, "price")))
@@ -80,7 +77,7 @@ def main():
             input_valid = False
             while not input_valid:
                 try:
-                    item_completed = int(input(print("Enter the number of an item to mark as completed")))
+                    item_completed = int(input("Enter the number of an item to mark as completed"))
                     item_completed *= 2
                     input_valid = True
                 except ValueError:
@@ -88,40 +85,35 @@ def main():
                 except:
                    print("Invalid input: Enter a number")
             while shopping_list[0][0] > item_completed > shopping_list[-1][0] or item_completed not in shopping_list[:][0]:
-                item_completed = input(print("Invalid item number"))
+                item_completed = input("Invalid item number")
             shopping_list[item_completed][4] = "c"
             print("{} marked as completed".format(shopping_list[item_completed][1]))
 
         else:
             print("Invalid menu choice")
-            menu_input = input(menu)
+
+        menu = "Menu:\nR - List required items\nC - List completed items\nA - Add new item\nM - Mark an item as completed\nQ - Quit"
+        menu_input = str(input(menu))
 
     for element in shopping_list:
         element.append("\n")
     shopping_list_file.write(shopping_list)
     print("{} items saved to items.csv\nHave a nice day :)".format(len(shopping_list)))
 
-
-def total_calculator(list, type):
+def print_matching_items(list, type):
     """"Takes the shopping list and type of total that needs to be counted as inputs and returns the total (i.e. number of required items, number of completed items or total price)."""
     total = 0
-    if type == "required":
-        for i in list:
-            if i[4] == "r":
-                total += 1
-    elif type == "completed":
-        for i in list:
-            if i[4] == "c":
-                total += 1
-    elif type == "price":
-        for i in list:
-            total += int(i[2])
-    return(total)
+    count = 0
+    for item in list:
+        if item[3] == type:
+            print("{}. {:20}${:6.2f}({:>3})".format(count, item[0], item[1], item[2], item[3]))
+            count += 1
+            total += float(item[2])
+    print("Total expected price for {} items: ${:.2f}".format(count, total))
 
 
-def print_items(element):
+def print_item(item):
     """returns a formatted version of the shopping list"""
-    return("{}. {:20}${:6.2f}({:>3})".format(element[0], element[1], element[2], element[3]))
-
+    print("{}. {:20}${:6.2f}({:>3})".format(item[0], item[1], item[2], item[3]))
 
 main()
