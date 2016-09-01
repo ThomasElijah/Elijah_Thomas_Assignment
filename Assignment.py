@@ -25,16 +25,13 @@ def main():
     while menu_input.upper() != "Q":
         if menu_input.upper() == "R":
             print_matching_items(shopping_list, 'r')
-            # for element in shopping_list:
-            #     if "r" in element[4]:
-            #         print_item(element)
-            # print("Total expected price for {} items: ${:.2f}".format(total_calculator(shopping_list, "required"), total_calculator(shopping_list, "price")))
+
+
 
         elif menu_input.upper() == "C":
-            for element in shopping_list:
-                if "c" in element[4]:
-                    print(print_item(shopping_list))
-            print("Total expected price for {} items: ${:.2f}".format(total_calculator(shopping_list, "completed"), total_calculator(shopping_list, "price")))
+            print(print_matching_items(shopping_list, 'c'))
+
+
 
         elif menu_input.upper() == "A":
             new_item = input("Item name:")
@@ -69,10 +66,11 @@ def main():
             items.clear()
             print("{}, ${:.2f} (priority {}) added to shopping list".format(new_item, new_item_price, new_item_priority))
 
+
+
         elif menu_input.upper() == "M":
             for element in shopping_list:
-                print(print_items(shopping_list))
-            print("Total expected price for {} items: ${:.2f}".format(number_items, total_calculator(shopping_list, "price")))
+                print(print_matching_items(shopping_list, 'n'))
 
             input_valid = False
             while not input_valid:
@@ -84,15 +82,17 @@ def main():
                     print("Invalid input: Enter a number")
                 except:
                    print("Invalid input: Enter a number")
-            while shopping_list[0][0] > item_completed > shopping_list[-1][0] or item_completed not in shopping_list[:][0]:
+            while len(shopping_list) > item_completed > len(shopping_list) or item_completed not in shopping_list[:][0]:
                 item_completed = input("Invalid item number")
-            shopping_list[item_completed][4] = "c"
+            shopping_list[item_completed][3] = "c"
             print("{} marked as completed".format(shopping_list[item_completed][1]))
+
+
 
         else:
             print("Invalid menu choice")
 
-        menu = "Menu:\nR - List required items\nC - List completed items\nA - Add new item\nM - Mark an item as completed\nQ - Quit"
+
         menu_input = str(input(menu))
 
     for element in shopping_list:
@@ -110,10 +110,5 @@ def print_matching_items(list, type):
             count += 1
             total += float(item[2])
     print("Total expected price for {} items: ${:.2f}".format(count, total))
-
-
-def print_item(item):
-    """returns a formatted version of the shopping list"""
-    print("{}. {:20}${:6.2f}({:>3})".format(item[0], item[1], item[2], item[3]))
 
 main()
