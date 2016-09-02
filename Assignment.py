@@ -60,7 +60,7 @@ def main():
                 except:
                     print("Priority must be 1, 2 or 3")
             while new_item_priority < 1 or new_item_priority > 3:
-                new_item_priority = int(input("Invalid input; enter a valid number"))
+                new_item_priority = int(input("Priority must be 1, 2 or 3"))
             items = [new_item, new_item_price, new_item_priority, 'r']
             shopping_list.append(items)
             (print_matching_items(shopping_list, 'r' or 'c'))
