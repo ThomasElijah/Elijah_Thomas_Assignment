@@ -68,7 +68,7 @@ def main():
 
 
         elif menu_input.upper() == "M":
-            position_list = print_matching_items(shopping_list, 'r')
+            required_index = print_matching_items(shopping_list, 'r')
 
             input_valid = False
             while not input_valid:
@@ -82,11 +82,9 @@ def main():
                    print("Invalid input: Enter a number")
             while item_completed < 0 or item_completed > len(shopping_list):
                 item_completed = input("Invalid item number: Enter a number")
-            shopping_list[(position_list[item_completed])][3] = 'c'
-
-#TODO: Figure out how to make the item number to complete include only the required items when changing 'r' to 'c'
-
-            print("{} marked as completed".format(shopping_list[item_completed][0]))
+            actual_index = required_index[item_completed]
+            shopping_list[actual_index][3] = "c"
+            print("{} marked as completed".format(shopping_list[actual_index][0]))
 
 
 
@@ -106,15 +104,13 @@ def print_matching_items(list, type):
     """"Takes the shopping list and type of total that needs to be counted as inputs and returns the total (i.e. number of required items, number of completed items or total price)."""
     total = 0
     count = 0
-    to_be_completed_position = -1
     positions = []
     for item in list:
-        to_be_completed_position += 1
         if item[3] == type:
             print("{}. {:20}${:6.2f} ({:})".format(count, item[0], item[1], item[2], item[3]))
             count += 1
             total += float(item[1])
-            positions.append(to_be_completed_position)
+            positions.append(list.index(item))
     if type == 'c' and count == 0:
         print("No completed items")
     elif type == 'r' and count == 0:
