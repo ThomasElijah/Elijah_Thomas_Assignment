@@ -5,7 +5,7 @@ CP 1404
 #Ask about try and except and if the input needs to be acquired before the try, only in the try or in the exception as well.
 import math
 def main():
-    shopping_list_file = open("items.csv", 'r')
+    shopping_list_file = open("items.csv", 'r+')
     shopping_list = []
 
     number_items = 0
@@ -69,22 +69,22 @@ def main():
 
         elif menu_input.upper() == "M":
             required_index = print_matching_items(shopping_list, 'r')
-
-            input_valid = False
-            while not input_valid:
-                try:
-                    item_completed = int(input("Enter the number of an item to mark as completed"))
-                    test_item_completed = item_completed * 2
-                    input_valid = True
-                except ValueError:
-                    print("Invalid input: Enter a number")
-                except:
-                   print("Invalid input: Enter a number")
-            while item_completed < 0 or item_completed > len(shopping_list):
-                item_completed = input("Invalid item number: Enter a number")
-            actual_index = required_index[item_completed]
-            shopping_list[actual_index][3] = "c"
-            print("{} marked as completed".format(shopping_list[actual_index][0]))
+            if required_index != False:
+                input_valid = False
+                while not input_valid:
+                    try:
+                        item_completed = int(input("Enter the number of an item to mark as completed"))
+                        test_item_completed = item_completed * 2
+                        input_valid = True
+                    except ValueError:
+                        print("Invalid input: Enter a number")
+                    except:
+                       print("Invalid input: Enter a number")
+                while item_completed < 0 or item_completed > len(shopping_list):
+                    item_completed = int(input("Invalid item number: Enter a number"))
+                actual_index = required_index[item_completed]
+                shopping_list[actual_index][3] = "c"
+                print("{} marked as completed".format(shopping_list[actual_index][0]))
 
 
 
@@ -93,12 +93,10 @@ def main():
 
 
         menu_input = str(input(menu))
-
-    for element in shopping_list:
-        element.append("\n")
     for item in shopping_list:
-        shopping_list_file.write(item)
+        shopping_list_file.write("{},{},{},{}\n".format(item[0],item[1], item[2], item[3]))
     print("{} items saved to items.csv\nHave a nice day :)".format(len(shopping_list)))
+    shopping_list_file.close()
 
 def print_matching_items(list, type):
     """"Takes the shopping list and type of total that needs to be counted as inputs and returns the total (i.e. number of required items, number of completed items or total price)."""
@@ -115,6 +113,7 @@ def print_matching_items(list, type):
         print("No completed items")
     elif type == 'r' and count == 0:
         print("No required items")
+        positions = False
     else:
         print("Total expected price for {} items: ${:.2f}".format(count, total))
     return(positions)
