@@ -5,7 +5,7 @@ CP 1404
 #Ask about try and except and if the input needs to be acquired before the try, only in the try or in the exception as well.
 import math
 def main():
-    shopping_list_file = open("items.csv", 'r+')
+    shopping_list_file = open("items.csv", 'r')
     shopping_list = []
 
     number_items = 0
@@ -16,7 +16,7 @@ def main():
         shopping_list.append(items)
         number_items += 1
         item_number += 1
-
+    shopping_list_file.close()
     print("Shopping List 1.0 - by Elijah Thomas")
 
     menu = "Menu:\nR - List required items\nC - List completed items\nA - Add new item\nM - Mark an item as completed\nQ - Quit"
@@ -93,8 +93,13 @@ def main():
 
 
         menu_input = str(input(menu))
+
+    shopping_list_file = open('items.csv', 'w')
     for item in shopping_list:
-        shopping_list_file.write("{},{},{},{}\n".format(item[0],item[1], item[2], item[3]))
+        if item is not shopping_list[-1]:
+            shopping_list_file.write("{},{},{},{}\n".format(item[0],item[1], item[2], item[3]))
+        else:
+            shopping_list_file.write("{},{},{},{}".format(item[0], item[1], item[2], item[3]))
     print("{} items saved to items.csv\nHave a nice day :)".format(len(shopping_list)))
     shopping_list_file.close()
 
