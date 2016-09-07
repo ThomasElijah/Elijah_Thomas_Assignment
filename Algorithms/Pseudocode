@@ -2,7 +2,6 @@ main():
     open "items.csv" as shopping_list_file for reading
     shopping_list = empty list
 
-    number_items = 0
     item_number = 0
     repeat for each line in shopping_list_file
         item, price, priority, status = word seperated by: , and ingoring blank characters

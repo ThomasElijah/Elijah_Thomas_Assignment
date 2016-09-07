@@ -8,12 +8,10 @@ def main():
     shopping_list_file = open("items.csv", 'r')
     shopping_list = []
 
-    item_number = 0
     for line in shopping_list_file:
         item, price, priority, status = line.strip().split(',')
         items = [item, float(price), priority, status]
         shopping_list.append(items)
-        item_number += 1
     shopping_list_file.close()
     print("Shopping List 1.0 - by Elijah Thomas")
 
