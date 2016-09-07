@@ -24,7 +24,7 @@ def main():
 
 
         elif menu_input.upper() == "C":
-            (print_matching_items(shopping_list, 'c'))
+            print_matching_items(shopping_list, 'c')
 
 
 
@@ -59,7 +59,7 @@ def main():
                 new_item_priority = int(input("Priority must be 1, 2 or 3"))
             items = [new_item, new_item_price, new_item_priority, 'r']
             shopping_list.append(items)
-            (print_matching_items(shopping_list, 'r' or 'c'))
+            print_matching_items(shopping_list, 'r' or 'c')
 
 
 
