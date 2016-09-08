@@ -2,7 +2,7 @@
 Elijah Thomas Assignment 1
 CP 1404
 """
-#Ask about try and except and if the input needs to be acquired before the try, only in the try or in the exception as well.
+
 import math
 def main():
     shopping_list_file = open("items.csv", 'r')
